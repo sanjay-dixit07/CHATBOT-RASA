@@ -1,1 +1,284 @@
 
+version: "2.0"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - moin
+    - hey there
+    - let's go
+    - hey dude
+    - goodmorning
+    - goodevening
+    - good afternoon
+
+- intent: goodbye
+  examples: |
+    - good afternoon
+    - cu
+    - good by
+    - cee you later
+    - good night
+    - bye
+    - goodbye
+    - have a nice day
+    - see you around
+    - bye bye
+    - see you later
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+
+- intent: mood_great
+  examples: |
+    - perfect
+    - great
+    - amazing
+    - feeling like a king
+    - wonderful
+    - I am feeling very good
+    - I am great
+    - I am amazing
+    - I am going to save the world
+    - super stoked
+    - extremely good
+    - so so perfect
+    - so good
+    - so perfect
+
+- intent: mood_unhappy
+  examples: |
+    - my day was horrible
+    - I am sad
+    - I don't feel very well
+    - I am disappointed
+    - super sad
+    - I'm so sad
+    - sad
+    - very sad
+    - unhappy
+    - not good
+    - not very good
+    - extremly sad
+    - so saad
+    - so sad
+
+- intent: bot_challenge
+  examples: |
+    - are you a bot?
+    - are you a human?
+    - am I talking to a bot?
+    - am I talking to a human?
+- intent: jarvis
+  examples: |
+    -tony stark
+    -friday
+    -pepper potts
+    -iron man
+    -bitian
+    -i am ironman
+    -jarvis
+- intent: search_restaurant
+  examples: |
+    -show me [chettinad](hotel) restaurant
+    -show me [indian](hotel) restaurant
+    -show me [chinese](hotel) restaurant
+    -show me [thai](hotel) restaurant
+    -show me [italian](hotel) restaurant
+- intent: corona_state
+  examples: |
+    -covid cases in [Andhra Pradesh](state)
+    -covid cases in [Arunachal Pradesh](state)
+    -covid cases in [Assam](state)
+    -covid cases in [Bihar](state)
+    -covid cases in [Chhattisgarh](state)
+    -covid cases in [Goa](state)
+    -covid cases in [Gujarat](state)
+    -covid cases in [Haryana](state)
+    -covid cases in [Himachal Pradesh](state)
+    -covid cases in [Jharkhand](state)
+    -covid cases in [Karnataka](state)
+    -covid cases in [Kerala](state)
+    -covid cases in [Madhya Pradesh](state)
+    -covid cases in [Maharashtra](state)
+    -covid cases in [Manipur](state)
+    -covid cases in [Meghalaya](state)
+    -covid cases in [Mizoram](state)
+    -covid cases in [Nagaland](state)
+    -covid cases in [Odisha](state)
+    -covid cases in [Punjab](state)
+    -covid cases in [Rajasthan](state)
+    -covid cases in [Sikkim](state)
+    -covid cases in [Tamil Nadu](state)
+    -covid cases in [Telangana](state)
+    -covid cases in [Tripura](state)
+    -covid cases in [Uttar Pradesh](state)
+    -covid cases in [Uttarakhand](state)
+    -covid cases in [West Bengal](state)
+
+- intent: corona_beds
+  examples: |
+    -covid  in [Andhra Pradesh](beds)
+    -covid  in [Arunachal Pradesh](beds)
+    -covid  in [Assam](beds)
+    -covid  in [Bihar](beds)
+    -covid in [Dharmapuri](beds)
+    -covid  in [Chhattisgarh](beds)
+    -covid  in [Goa](beds)
+    -covid  in [Gujarat](beds)
+    -covid  in [Haryana](beds)
+    -covid  in [Himachal Pradesh](beds)
+    -covid  in [Jharkhand](beds)
+    -covid  in [Karnataka](beds)
+    -covid  in [Kerala](beds)
+    -covid  in [Madhya Pradesh](beds)
+    -covid  in [Maharashtra](beds)
+    -covid  in [Manipur](beds)
+    -covid  in [Meghalaya](beds)
+    -covid  in [Mizoram](beds)
+    -covid  in [Nagaland](beds)
+    -covid  in [Odisha](beds)
+    -covid  in [Punjab](beds)
+    -covid in [Rajasthan](beds)
+    -covid  in [Sikkim](beds)
+    -covid in [Tamil Nadu](beds)
+    -covid  in [Telangana](beds)
+    -covid  in [Tripura](beds)
+    -covid in [Uttar Pradesh](beds)
+    -covid  in [Uttarakhand](beds)
+    -covid  in [West Bengal](beds)
+- intent: corona_intro
+  examples: |
+    -What is corona virus
+    -what is covid
+    -what is a novel corona virus
+    -what is covid-19
+    -tell me about corona
+    -can you tell me about covid
+- intent: corona_spread
+  examples: |
+    -how does corona virus spread
+
+- intent: corona_food_spread
+  examples: |
+    -how does the virus spread
+    -Does corona spread from food
+    -how will corona spread from food
+    -what is covid-19
+    -tell me about corona
+    -can you tell me about covid 
+- intent: warm_weather
+  examples: |
+    -will warm weather stop the spread
+    -will it stop with warm weather
+    -how will corona spread from food
+    -what is covid-19
+    -tell me about corona
+    -can you tell me about covid 
+- intent: high_risk
+  examples: |
+    -who is at a higher risk of infection
+
+version: "2.0"
+
+rules:
+
+- rule: Say goodbye anytime the user says goodbye
+  steps:
+  - intent: goodbye
+  - action: utter_goodbye
+
+- rule: Say 'I am a bot' anytime the user challenges
+  steps:
+  - intent: bot_challenge
+  - action: utter_iamabot
+
+version: "2.0"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+- story: jarvis path
+  steps:
+  - intent: jarvis
+  - action: action_jarvis 
+
+- story: restaurant path
+  steps:
+  - intent: search_restaurant
+  - action: action_search_restaurant
+- story: corona
+  steps:
+  - intent: corona_state
+  - action: action_corona_state
+- story: corona beds
+  steps:
+  - intent: corona_beds
+  - action: action_corona_beds
+- story: what is corona
+  steps:
+  - intent: corona_intro
+  - action: utter_corona_intro
+- story: how does corona speed
+  steps:
+  - intent: corona_spread
+  - action: utter_corona_spread
+- story: corona food spread
+  steps:
+  - intent: corona_food_spread
+  - action: utter_corona_food_spread
+- story: corona warm weather
+  steps:
+  - intent: warm_weather
+  - action: utter_warm_weather
+- story: corona high risk
+  steps:
+  - intent: high_risk
+  - action: utter_high_risk
