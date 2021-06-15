@@ -1,0 +1,132 @@
+
+# This files contains your custom actions which can be used to run
+# custom Python code.
+#
+# See this guide on how to implement these action:
+# https://rasa.com/docs/rasa/custom-actions
+
+
+# This is a simple example for a custom action which utters "Hello World!"
+
+#from _typeshed import NoneType
+from typing import Any, Text, Dict, List
+import requests
+from rasa_sdk import Action, Tracker
+from rasa_sdk.executor import CollectingDispatcher
+
+class ActionHelloWorld(Action):
+
+
+
+    def name(self) -> Text:
+        return "action_jarvis"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+
+        dispatcher.utter_message(text="Hello Boss!Jarvis, Here For your service!")
+
+        return []
+
+class ActionRestSearch(Action):
+
+
+
+    def name(self) -> Text:
+        return "action_search_restaurant"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        entities= tracker.latest_message['entities']
+        print(entities)
+        for e in entities:
+            if e['entity'] == 'hotel':
+                name = e['value']
+            if name == "indian":
+                message="Indian1,Indian2,Indian3,Indian4,Indian5"
+            if name == "chinese":
+                message="Chinese1,Chinese2,Chinese3,Chinese4,Chinese5"
+        dispatcher.utter_message(text=message)
+
+        return []
+
+class ActionCoronaTracker(Action):
+
+
+        def name(self) -> Text:
+
+
+           return "action_corona_state"
+
+        def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+         web=requests.get("https://api.rootnet.in/covid19-in/stats/history")
+         response=web.json()
+         entities=tracker.latest_message['entities']
+         print('Last Message Now', entities)
+         state=[] 
+         for e in entities:
+            if e['entity']=='state':
+
+                state=e['value']
+                for one in response["data"]:
+                    for two in one["regional"]:
+                                                          
+         
+                        if two["loc"] == state.title():
+                            print(two)
+                            message= 'loc: '+str(two['loc']) +'confirmedCasesIndian: '+str(two['confirmedCasesIndian']) +'confirmedCasesForeign: '+str(two['confirmedCasesForeign']) +'discharged: '+str(two['discharged']) +'deaths: '+str(two['deaths']) +'totalConfirmed: '+str(two['totalConfirmed'])
+                            
+
+
+
+         
+         print(message)
+         dispatcher.utter_message(message)
+
+         return []
+
+class ActionCoronaBedTracker(Action):
+
+
+        def name(self) -> Text:
+
+
+           return "action_corona_beds"
+
+        def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+         web=requests.get("https://api.rootnet.in/covid19-in/hospitals/medical-colleges")
+         response=web.json()
+         entities=tracker.latest_message['entities']
+         print('Last Message Now', entities)
+         beds=[]
+         for e in entities:
+            if e['entity']=='beds':
+
+
+                beds=e['value']
+                for one in response['data']['medicalColleges']:
+                    if one['state'] ==beds.title():
+                        print(one)
+                        stark= 'state: '+str(one['state']) +'name: '+str(one['name']) +'city: '+str(one['city']) +'ownership: '+str(one['ownership']) +'admissionCapacity: '+str(one['admissionCapacity']) +'hospitalBeds: '+str(one['hospitalBeds'])
+
+                
+                                                          
+         
+                        
+                            
+
+
+
+         
+                print(stark)
+                dispatcher.utter_message(text=stark)
+
+         return []
+
