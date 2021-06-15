@@ -1,0 +1,67 @@
+version: "2.0"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+
+- story: sad path 1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: affirm
+  - action: utter_happy
+
+- story: sad path 2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_unhappy
+  - action: utter_cheer_up
+  - action: utter_did_that_help
+  - intent: deny
+  - action: utter_goodbye
+- story: jarvis path
+  steps:
+  - intent: jarvis
+  - action: action_jarvis 
+
+- story: restaurant path
+  steps:
+  - intent: search_restaurant
+  - action: action_search_restaurant
+- story: corona
+  steps:
+  - intent: corona_state
+  - action: action_corona_state
+- story: corona beds
+  steps:
+  - intent: corona_beds
+  - action: action_corona_beds
+- story: what is corona
+  steps:
+  - intent: corona_intro
+  - action: utter_corona_intro
+- story: how does corona speed
+  steps:
+  - intent: corona_spread
+  - action: utter_corona_spread
+- story: corona food spread
+  steps:
+  - intent: corona_food_spread
+  - action: utter_corona_food_spread
+- story: corona warm weather
+  steps:
+  - intent: warm_weather
+  - action: utter_warm_weather
+- story: corona high risk
+  steps:
+  - intent: high_risk
+  - action: utter_high_risk
